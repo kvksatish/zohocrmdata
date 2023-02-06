@@ -9,8 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "index.js",
-            "timeout": 15000
+            "dest": "index.js"
         }
     ]
 }
