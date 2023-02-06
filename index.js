@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 let accessToken = "";
 let nextGet = "";
-let fullData = [];
+
 
 app.use(express.json());
 app.use(cors());
@@ -44,36 +44,7 @@ app.get("/getdata", async (req, res) => {
         );
         nextGet = bulkResponse.data.data[0].details.id;
 
-        const inputUrl = `https://www.zohoapis.com/crm/bulk/v3/read/${nextGet}/result`;
-        const headers = {
-            Authorization: `Zoho-oauthtoken ${accessToken}`,
-        };
-
-        setTimeout(() => {
-
-
-            request
-                .get({ url: inputUrl, headers: headers })
-                .pipe(unzipper.Parse())
-                .on("entry", (entry) => {
-                    const fileName = entry.path;
-                    const type = entry.type;
-
-                    if (fileName === `${nextGet}.csv` && type === "File") {
-                        entry
-                            .pipe(csv())
-                            .on("data", (jsonObj) => {
-                                fullData.push(JSON.parse(jsonObj.toString()));
-                            })
-                            .on("end", () => {
-                                res.send(fullData);
-                            });
-                    } else {
-                        entry.autodrain();
-                    }
-                });
-        }, 1000 * 10);
-
+        res.send({ accessToken, nextGet })
     } catch (error) {
         console.error(error);
     }
