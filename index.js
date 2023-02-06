@@ -72,7 +72,7 @@ app.get("/getdata", async (req, res) => {
                         entry.autodrain();
                     }
                 });
-        }, 1000 * 30);
+        }, 1000 * 10);
 
     } catch (error) {
         console.error(error);
