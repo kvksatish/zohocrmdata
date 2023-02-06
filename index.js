@@ -62,7 +62,7 @@ app.get("/getdata",
                         })
                         .pipe(unzipper.Parse())
                         .on('entry', function (entry) {
-                            console.log(entry)
+                            // console.log(entry)
                             var fileName = entry.path;
                             var type = entry.type;
 
@@ -82,8 +82,8 @@ app.get("/getdata",
                                     })
                                     .on('end', () => {
                                         console.log(fulldata.length);
-                                        responsefulll.send(fulldata)
                                         console.log('Done converting CSV to JSON.');
+                                        responsefulll.send(fulldata)
                                     });
                             } else {
                                 entry.autodrain();
